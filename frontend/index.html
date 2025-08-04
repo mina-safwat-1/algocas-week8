@@ -4,7 +4,7 @@
   <title>Frontend</title>
 </head>
 <body>
-  <h1>Hello from Mina messages App</h1>
+  <h1>Hello from Mina messages App test 1</h1>
   <p>Algocas week8 task</p>
 
   <form id="messageForm">
@@ -14,33 +14,34 @@
 
   <ul id="messagesList"></ul>
 
-  <script>
-    async function fetchMessages() {
-      const res = await fetch('http://localhost:5000/api/messages');
-      const data = await res.json();
-      const list = document.getElementById('messagesList');
-      list.innerHTML = '';
-      data.forEach(msg => {
-        const li = document.createElement('li');
-        li.textContent = msg.content;
-        list.appendChild(li);
-      });
-    }
-
-    document.getElementById('messageForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const input = document.getElementById('messageInput');
-      const content = input.value;
-      await fetch('http://localhost:5000/api/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content })
-      });
-      input.value = '';
-      fetchMessages();
+<script>
+  async function fetchMessages() {
+    const res = await fetch('/api/messages'); // Relative path
+    const data = await res.json();
+    const list = document.getElementById('messagesList');
+    list.innerHTML = '';
+    data.forEach(msg => {
+      const li = document.createElement('li');
+      li.textContent = msg.content;
+      list.appendChild(li);
     });
+  }
 
+  document.getElementById('messageForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = document.getElementById('messageInput');
+    const content = input.value;
+    await fetch('/api/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content })
+    });
+    input.value = '';
     fetchMessages();
-  </script>
+  });
+
+  fetchMessages();
+</script>
+
 </body>
 </html>
